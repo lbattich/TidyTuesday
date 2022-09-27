@@ -111,7 +111,7 @@ europe_plot <-
     data = europe_data,
     aes(x = LON_WWTP, y = LAT_WWTP, color = DF),
     size = 0.65,
-    alpha = 0.6) +
+    alpha = 0.7) +
   scale_color_gradient(low = "#cc0000", high = "#ffff99", breaks=c(0,2,4,6,8,10), limits=c(0,10)) + 
   labs(title = "Wastewater treatment plants in Europe",
        caption = "#TidyTuesday <span style='font-family:\"fa-brands\"'>&#xf099; </span> @lucasbattich<br>Data: Macedo et al (2022)",
@@ -140,7 +140,7 @@ europe_plot <-
         plot.background = element_rect(fill = bg_color)) +
   guides(color = guide_colorbar(title.position = "left",
                                 # label.position = "left",
-                                title.hjust = 0.5))
+                                title.hjust = 0.75))
 europe_plot
 ```
 ```{r}
@@ -152,11 +152,11 @@ plot <- ggdraw() +
 ```{r}
 ### Save plot ###
 
-showtext_opts(dpi = 200)
+showtext_opts(dpi = 300)
 save_plot(plot = plot,
           "tidytuesday_2022_w38.png",
           base_height = 5,
-          dpi=200) 
+          dpi=300) 
 ```
 
 
