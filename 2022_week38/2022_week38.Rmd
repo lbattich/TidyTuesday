@@ -1,5 +1,5 @@
 ---
-title: "TidyTuesday 2022 Week38"
+title: "TidyTuesday 2022 Week 38"
 output: html_document
 ---
 
@@ -19,17 +19,17 @@ head(HydroWASTE_v10)
 ```
 ```{r}
 HydroWASTE_v10 |>
-  group_by(STATUS) |> 
+  group_by(STATUS) |>
   count()
 ```
 ```{r}
-df_plot <- HydroWASTE_v10 |> 
-  filter(! STATUS %in% c("Closed", "Decommissioned", "Non-Operational")) |> 
+df_plot <- HydroWASTE_v10 |>
+  filter(! STATUS %in% c("Closed", "Decommissioned", "Non-Operational")) |>
   filter(!is.na(DF)) |>
   select(WASTE_ID, COUNTRY, CNTRY_ISO, WWTP_NAME, LAT_WWTP, LON_WWTP, WASTE_DIS, DF) |>
   mutate(region = COUNTRY)
 df_plot |>
-  group_by(COUNTRY) |> 
+  group_by(COUNTRY) |>
   count()
 ```
 ```{r}
@@ -45,11 +45,9 @@ europe_countries <- c("Albania", "Latvia", "Andorra", "Liechtenstein", "Lithuani
 
 bg_color <- "#52486B"
 fg_color <- "#281C44"
-txt_color <- "#ffffff"
-hi_color <- "#ff8000"
 ```
 ```{r}
-### Load map data ### 
+### Load map data ###
 
 europe_map <- map_data("world") |>
   filter(! long > 180,
@@ -75,6 +73,7 @@ europe_data |>
 
 ```{r}
 ### Text plot ###
+
 text_df <- tibble(
   x = 0, y = 0,
   label = str_glue("<span style = 'color:#ffffff;'>**Incomplete removal in wastewater treatment leads to discharge of diluted chemical waste into rivers and seas**</span><br><br><span style = 'color:#ff8000;'>**",toString(total_n),"**</span><span style = 'color:#ffffff;'> **wastewater plants in Europe show a dilution factor less than 10, posing** </span><span style = 'color:#ff8000;'>**high contamination risk**</span>")
@@ -97,8 +96,8 @@ text_plot <- ggplot(text_df) +
 ```{r}
 ### Plot ###
 
-europe_plot <- 
-  europe_map |> 
+europe_plot <-
+  europe_map |>
   ggplot(aes(x = long, y = lat, map_id = region))+
   geom_map(map = europe_map,
            fill = fg_color,
@@ -112,7 +111,7 @@ europe_plot <-
     aes(x = LON_WWTP, y = LAT_WWTP, color = DF),
     size = 0.65,
     alpha = 0.7) +
-  scale_color_gradient(low = "#cc0000", high = "#ffff99", breaks=c(0,2,4,6,8,10), limits=c(0,10)) + 
+  scale_color_gradient(low = "#cc0000", high = "#ffff99", breaks=c(0,2,4,6,8,10), limits=c(0,10)) +
   labs(title = "Wastewater treatment plants in Europe",
        caption = "#TidyTuesday <span style='font-family:\"fa-brands\"'>&#xf099; </span> @lucasbattich<br>Data: Macedo et al (2022)",
        color = "dilution factor") +
@@ -139,7 +138,6 @@ europe_plot <-
         plot.margin = margin(0,-15,0,0, "pt"),
         plot.background = element_rect(fill = bg_color)) +
   guides(color = guide_colorbar(title.position = "left",
-                                # label.position = "left",
                                 title.hjust = 0.75))
 europe_plot
 ```
@@ -154,13 +152,7 @@ plot <- ggdraw() +
 
 showtext_opts(dpi = 300)
 save_plot(plot = plot,
-          "tidytuesday_2022_w38.png",
+          "2022_week38.png",
           base_height = 5,
-          dpi=300) 
+          dpi = 300)
 ```
-
-
-
-
-
-
